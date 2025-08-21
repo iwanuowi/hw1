@@ -23,7 +23,8 @@ const {
 router.get("/", async (req, res) => {
   try {
     const category = req.query.category;
-    const products = await getProducts(category);
+    const page = req.query.page;
+    const products = await getProducts(category, page);
     res.status(200).send(products);
   } catch (error) {
     console.log(error);

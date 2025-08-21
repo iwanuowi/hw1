@@ -1,32 +1,48 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8888/products";
+const API_URL = "http://localhost:8888/";
 
-// fetch products by category
-export async function getProducts(category = "all") {
-  try {
-    const response = await axios.get(
-      API_URL + (category === "all" ? "" : "?category=" + category)
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    return [];
-  }
+// get/fetch all the product
+export async function getProducts(category, page = 1) {
+  const response = await axios.get(
+    API_URL +
+      "products?page=" +
+      page +
+      (category === "all" ? "" : "&category=" + category)
+  );
+
+  return response.data;
 }
 
-export function getProduct(id) {
-  return axios.get(`${API_URL}/${id}`);
+// get the product by id
+export async function getProduct(id) {
+  const response = await axios.get(API_URL + "products/" + id);
+  return response.data;
 }
 
-export function addProduct(product) {
-  return axios.post(API_URL, product);
+// create a new product
+export async function addProduct(name, description, price, category) {
+  const response = await axios.post(API_URL + "products", {
+    name: name,
+    description: description,
+    price: price,
+    category,
+  });
+  return response.data;
 }
 
-export function updateProduct(id, product) {
-  return axios.put(`${API_URL}/${id}`, product);
+// update the product by id
+export async function updateProduct(id, name, description, price, category) {
+  const response = await axios.put(API_URL + "products/" + id, {
+    name: name,
+    description: description,
+    price: price,
+    category,
+  });
+  return response.data;
 }
 
+// delete the product by id
 export function deleteProduct(id) {
-  return axios.delete(`${API_URL}/${id}`);
+  return axios.delete(`${API_URL}products/${id}`);
 }

@@ -1,11 +1,14 @@
 const Product = require("../models/Product");
 
-const getProducts = async (category) => {
+const getProducts = async (category, page = 1, itemsPerPage = 3) => {
   let filter = {};
   if (category) {
     filter.category = category;
   }
-  return await Product.find(filter);
+  return await Product.find(filter)
+    .limit(itemsPerPage)
+    .skip((page - 1) * itemsPerPage)
+    .sort({ _id: -1 });
 };
 
 const getProduct = async (id) => {
@@ -23,8 +26,8 @@ const addProduct = async (name, description, price, category) => {
   return newProduct;
 };
 
-const updateProduct = async (name, description, price, category) => {
-  const updateProduct = await Product.findByIdAndUpdate(
+const updateProduct = async (id, name, description, price, category) => {
+  const updatedProduct = await Product.findByIdAndUpdate(
     id,
     {
       name,
@@ -32,11 +35,9 @@ const updateProduct = async (name, description, price, category) => {
       price,
       category,
     },
-    {
-      new: true,
-    }
+    { new: true } // return updated doc instead of old one
   );
-  return updateProduct;
+  return updatedProduct;
 };
 
 const deleteProduct = async (id) => {
