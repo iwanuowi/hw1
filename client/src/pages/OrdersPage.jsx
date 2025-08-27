@@ -133,7 +133,10 @@ const OrdersPage = () => {
                       </Box>
                       <Box>
                         {item.products.map((product) => (
-                          <div key={product.id || product.name}>
+                          <div
+                            key={product.id || product.name}
+                            sx={{ mt: "2px" }}
+                          >
                             {product.name}
                           </div>
                         ))}
