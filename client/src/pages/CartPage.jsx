@@ -42,105 +42,89 @@ const CartPage = () => {
           variant="h3"
           align="center"
           fontWeight="bold"
-          sx={{ marginBottom: 3, marginTop: 3 }}
+          sx={{ marginBottom: 2, marginTop: 2 }}
         >
           Cart
         </Typography>
 
         <Box display="flex" justifyContent="center" gap={2}>
-          <Button
-            component={Link}
-            to="/"
-            variant="outlined"
-            sx={{ backgroundColor: "#E7F5FF", border: "0" }}
-          >
+          <Button component={Link} to="/" variant="outlined">
             Home
           </Button>
-          <Button
-            component={Link}
-            to="/cart"
-            variant="outlined"
-            sx={{ backgroundColor: "#238BE6", border: "0", color: "white" }}
-          >
+          <Button component={Link} to="/cart" variant="outlined">
             Cart
+          </Button>
+          <Button component={Link} to="/orders" variant="outlined">
+            Orders
           </Button>
         </Box>
       </div>
 
-      {/* The Cart  */}
+      {/* The Cart */}
       <Divider sx={{ mt: 3 }} />
       <Container maxWidth="lg" sx={{ textAlign: "center", mt: 4 }}>
-        {cartItems.length === 0 ? (
-          <>
-            <Typography>Your cart is empty.</Typography>
-            <Button
-              component={Link}
-              to="/"
-              sx={{ backgroundColor: "blue", color: "white", mt: 4 }}
-            >
-              Add your Cart!
-            </Button>
-          </>
-        ) : (
-          <>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell sx={{ fontWeight: "bold" }}>Product</TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>Price</TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>Quantity</TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>Total</TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {cartItems.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell>${item.price.toFixed(2)}</TableCell>
-                      <TableCell>{item.quantity}</TableCell>
-                      <TableCell>
-                        ${(item.price * item.quantity).toFixed(2)}
-                      </TableCell>
-                      <TableCell>
-                        <Button
-                          variant="contained"
-                          color="error"
-                          onClick={() => handleDelete(item.id)}
-                        >
-                          Remove
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-
-                  {/* Footer Row for Total */}
-                  <TableRow>
-                    <TableCell
-                      colSpan={3}
-                      align="right"
-                      sx={{ fontWeight: "bold" }}
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ fontWeight: "bold" }}>Product</TableCell>
+                <TableCell sx={{ fontWeight: "bold" }}>Price</TableCell>
+                <TableCell sx={{ fontWeight: "bold" }}>Quantity</TableCell>
+                <TableCell sx={{ fontWeight: "bold" }}>Total</TableCell>
+                <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cartItems.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>${item.price.toFixed(2)}</TableCell>
+                  <TableCell>{item.quantity}</TableCell>
+                  <TableCell>
+                    ${(item.price * item.quantity).toFixed(2)}
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => handleDelete(item.id)}
                     >
-                      Total:
-                    </TableCell>
-                    <TableCell sx={{ fontWeight: "bold" }}>
-                      ${getTotal().toFixed(2)}
-                    </TableCell>
-                    <TableCell />
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
+                      Remove
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
 
-            {/* Checkout Button */}
-            <Box textAlign="right" mt={3}>
-              <Button variant="contained" color="primary">
-                Checkout
-              </Button>
-            </Box>
-          </>
-        )}
+              {/* Footer Row for Total */}
+              <TableRow>
+                <TableCell
+                  colSpan={3}
+                  align="right"
+                  sx={{ fontWeight: "bold" }}
+                >
+                  Total:
+                </TableCell>
+                <TableCell sx={{ fontWeight: "bold" }}>
+                  ${getTotal().toFixed(2)}
+                </TableCell>
+                <TableCell />
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        {/* Checkout Button */}
+        <Box textAlign="right" mt={3}>
+          <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            to="/checkout"
+            disabled={cartItems.length === 0}
+          >
+            Checkout
+          </Button>
+        </Box>
       </Container>
     </>
   );

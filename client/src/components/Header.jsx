@@ -9,27 +9,20 @@ const Header = () => {
           variant="h3"
           align="center"
           fontWeight="bold"
-          sx={{ marginBottom: 3, marginTop: 3 }}
+          sx={{ marginBottom: 2, marginTop: 2 }}
         >
           Welcome to My Store
         </Typography>
 
         <Box display="flex" justifyContent="center" gap={2}>
-          <Button
-            component={Link}
-            to="/"
-            variant="outlined"
-            sx={{ backgroundColor: "#E7F5FF", border: "0" }}
-          >
+          <Button component={Link} to="/" variant="outlined">
             Home
           </Button>
-          <Button
-            component={Link}
-            to="/cart"
-            variant="outlined"
-            sx={{ backgroundColor: "#238BE6", border: "0", color: "white" }}
-          >
+          <Button component={Link} to="/cart" variant="outlined">
             Cart
+          </Button>
+          <Button component={Link} to="/orders" variant="outlined">
+            Orders
           </Button>
         </Box>
       </div>

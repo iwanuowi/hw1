@@ -1,3 +1,5 @@
+// load the environment variables
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -16,8 +18,9 @@ async function connectToMongoDB() {
 }
 
 const productRouter = require("./routes/product");
-
 app.use("/products", productRouter);
+app.use("/orders", require("./routes/order"));
+app.use("/payment", require("./routes/payment"));
 
 connectToMongoDB();
 
