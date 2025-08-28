@@ -93,6 +93,9 @@ const OrdersPage = () => {
           <Button component={Link} to="/orders" variant="outlined">
             Orders
           </Button>
+          <Button component={Link} to="/categories" variant="outlined">
+            Categories
+          </Button>
         </Box>
       </div>
       <Divider sx={{ mt: 3, mb: 3 }} />

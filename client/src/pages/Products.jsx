@@ -18,16 +18,25 @@ import { Link } from "react-router";
 import Swal from "sweetalert2";
 import { toast, Toaster } from "sonner";
 import { API_URL } from "../utils/constants";
+import { getCategories } from "../utils/api_category";
 
 function Products() {
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [page, setPage] = useState(1);
+  const [categories, setCategories] = useState([]);
 
   // fetch whenever page or category changes
   useEffect(() => {
     getProducts(selectedCategory, page).then((data) => setProducts(data));
   }, [page, selectedCategory]);
+
+  // for the category
+  useEffect(() => {
+    getCategories().then((data) => {
+      setCategories(data);
+    });
+  }, []);
 
   // filter products (in case your API doesn’t handle category)
   const filteredProducts =
@@ -35,6 +44,7 @@ function Products() {
       ? products
       : products.filter((p) => p.category === selectedCategory);
 
+  // handle delete
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -95,19 +105,20 @@ function Products() {
           </Button>
         </Box>
 
-        {/* Category Selector */}
         <Select
           value={selectedCategory}
           onChange={(event) => {
             setSelectedCategory(event.target.value);
             setPage(1); // reset page when category changes
           }}
+          sx={{ minWidth: 200, mb: 2 }}
         >
           <MenuItem value="all">All</MenuItem>
-          <MenuItem value="Consoles">Consoles</MenuItem>
-          <MenuItem value="Games">Games</MenuItem>
-          <MenuItem value="Accessories">Accessories</MenuItem>
-          <MenuItem value="Subscriptions">Subscriptions</MenuItem>
+          {categories.map((cat) => (
+            <MenuItem key={cat._id} value={cat.label}>
+              {cat.label}
+            </MenuItem>
+          ))}
         </Select>
       </Box>
       <Box sx={{ p: 9, pt: 0 }}>

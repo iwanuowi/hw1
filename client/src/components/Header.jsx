@@ -24,6 +24,9 @@ const Header = () => {
           <Button component={Link} to="/orders" variant="outlined">
             Orders
           </Button>
+          <Button component={Link} to="/categories" variant="outlined">
+            Categories
+          </Button>
         </Box>
       </div>
       <Divider sx={{ mb: 3, mt: 3 }} />

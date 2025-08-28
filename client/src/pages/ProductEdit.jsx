@@ -17,6 +17,7 @@ import Swal from "sweetalert2";
 import { uploadImage } from "../utils/api_image";
 import { API_URL } from "../utils/constants";
 import { styled } from "@mui/material/styles";
+import { getCategories } from "../utils/api_category";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -40,6 +41,7 @@ const ProductEdit = () => {
   const [category, setCategory] = useState("");
   const [error, setError] = useState(null);
   const [image, setImage] = useState(null);
+  const [categories, setCategories] = useState([]);
 
   // load the product data from the backend API, and assign it the state
   useEffect(() => {
@@ -62,6 +64,13 @@ const ProductEdit = () => {
         setError("Product not found");
       });
   }, [id]);
+
+  // for the category
+  useEffect(() => {
+    getCategories().then((data) => {
+      setCategories(data);
+    });
+  }, []);
 
   const handleFormSubmit = async () => {
     if (!name || !price || !category) {
@@ -151,15 +160,16 @@ const ProductEdit = () => {
             >
               Category
             </InputLabel>
+
             <Select
-              labelId="category-label"
               value={category}
               onChange={(event) => setCategory(event.target.value)}
             >
-              <MenuItem value={"Consoles"}>Consoles</MenuItem>
-              <MenuItem value={"Games"}>Games</MenuItem>
-              <MenuItem value={"Accessories"}>Accessories</MenuItem>
-              <MenuItem value={"Subscriptions"}>Subscriptions</MenuItem>
+              {categories.map((cat) => (
+                <MenuItem key={cat._id} value={cat.label}>
+                  {cat.label}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Box>

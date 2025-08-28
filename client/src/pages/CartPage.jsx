@@ -58,6 +58,9 @@ const CartPage = () => {
           <Button component={Link} to="/orders" variant="outlined">
             Orders
           </Button>
+          <Button component={Link} to="/orders" variant="outlined">
+            Categories
+          </Button>
         </Box>
       </div>
 
