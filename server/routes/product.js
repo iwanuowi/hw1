@@ -51,6 +51,7 @@ router.post("/", async (req, res) => {
     const description = req.body.description;
     const price = req.body.price;
     const category = req.body.category;
+    const image = req.body.image;
 
     // check error - make sure all the fields are not empty
     if (!name || !price || !category) {
@@ -59,7 +60,7 @@ router.post("/", async (req, res) => {
       });
     }
 
-    const product = await addProduct(name, description, price, category);
+    const product = await addProduct(name, description, price, category, image);
     res.status(200).send(product);
   } catch (error) {
     console.log(error);
@@ -75,6 +76,7 @@ router.put("/:id", async (req, res) => {
     const description = req.body.description;
     const price = req.body.price;
     const category = req.body.category;
+    const image = req.body.image;
 
     // check error - make sure all the fields are not empty
     if (!name || !price || !category) {
@@ -83,7 +85,14 @@ router.put("/:id", async (req, res) => {
       });
     }
 
-    const product = await updateProduct(id, name, description, price, category);
+    const product = await updateProduct(
+      id,
+      name,
+      description,
+      price,
+      category,
+      image
+    );
     res.status(200).send(product);
   } catch (error) {
     console.log(error);

@@ -15,6 +15,21 @@ import { addProduct } from "../utils/api";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
+import { styled } from "@mui/material/styles";
+import { uploadImage } from "../utils/api_image";
+import { API_URL } from "../utils/constants";
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
 const ProductAdd = () => {
   const navigate = useNavigate();
@@ -22,14 +37,15 @@ const ProductAdd = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
+  const [image, setImage] = useState("");
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    if (!name || !price || !category) {
+    if (!name || price <= 0 || !category) {
       toast.error("Please fill up the required fields");
       return;
     }
-    await addProduct(name, description, price, category);
+    await addProduct(name, description, price, category, image);
 
     Swal.fire({
       icon: "success",
@@ -75,7 +91,7 @@ const ProductAdd = () => {
             label="Price"
             fullWidth
             value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) => setPrice(Number(e.target.value))}
           />
         </Box>
 
@@ -98,6 +114,43 @@ const ProductAdd = () => {
               <MenuItem value={"Subscriptions"}>Subscriptions</MenuItem>
             </Select>
           </FormControl>
+        </Box>
+
+        <Box mb={2} sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
+          {image ? (
+            <>
+              <img src={API_URL + image} style={{ maxHeight: 80 }} />
+              <Typography>Image uploaded</Typography>
+              <Button
+                color="info"
+                variant="contained"
+                size="small"
+                onClick={() => setImage("")}
+              >
+                Remove
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="contained" component="label">
+                Upload image
+                <VisuallyHiddenInput
+                  type="file"
+                  onChange={async (event) => {
+                    if (event.target.files.length > 0) {
+                      try {
+                        const data = await uploadImage(event.target.files[0]);
+                        setImage(data.image_url);
+                      } catch (err) {
+                        toast.error("Image upload failed");
+                      }
+                    }
+                  }}
+                  accept="image/*"
+                />
+              </Button>
+            </>
+          )}
         </Box>
 
         <Box mb={2}>

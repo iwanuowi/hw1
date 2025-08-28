@@ -21,6 +21,10 @@ const productRouter = require("./routes/product");
 app.use("/products", productRouter);
 app.use("/orders", require("./routes/order"));
 app.use("/payment", require("./routes/payment"));
+app.use("/image", require("./routes/image"));
+
+// set a folder as static path
+app.use("/uploads", express.static("uploads"));
 
 connectToMongoDB();
 
