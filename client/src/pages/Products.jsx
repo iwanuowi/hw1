@@ -4,6 +4,7 @@ import {
   Grid,
   Card,
   CardContent,
+  CardMedia,
   Typography,
   Button,
   Chip,
@@ -16,6 +17,7 @@ import Header from "../components/Header";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import { toast, Toaster } from "sonner";
+import { API_URL } from "../utils/constants";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -64,6 +66,7 @@ function Products() {
       name: product.name,
       price: product.price,
       category: product.category,
+      image: product.image,
     });
     toast.success("Added to Cart successfully");
   };
@@ -118,12 +121,29 @@ function Products() {
             <Grid item xs={12} sm={6} md={4} key={i}>
               <Card
                 sx={{
-                  height: "250px",
+                  height: "500px",
                   width: "500px",
                   boxShadow: 3,
                   borderRadius: 2,
                 }}
               >
+                <CardMedia
+                  component="img"
+                  height="280"
+                  image={
+                    API_URL +
+                    (product.image
+                      ? product.image
+                      : "uploads/default_image.png")
+                  }
+                  alt={product.name}
+                  sx={{
+                    objectFit: "contain",
+                    objectPosition: "center",
+                    backgroundColor: "#f5f5f5",
+                  }}
+                />
+
                 <CardContent>
                   <Typography variant="h6" fontWeight="bold" gutterBottom>
                     {product.name}

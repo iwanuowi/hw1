@@ -14,6 +14,21 @@ import { useState, useEffect } from "react";
 import { getProduct, updateProduct } from "../utils/api";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { uploadImage } from "../utils/api_image";
+import { API_URL } from "../utils/constants";
+import { styled } from "@mui/material/styles";
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
 const ProductEdit = () => {
   // retrieve the id from the URL
@@ -24,6 +39,7 @@ const ProductEdit = () => {
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
   const [error, setError] = useState(null);
+  const [image, setImage] = useState(null);
 
   // load the product data from the backend API, and assign it the state
   useEffect(() => {
@@ -36,6 +52,7 @@ const ProductEdit = () => {
           setDescription(productData ? productData.description : "");
           setPrice(productData ? productData.price : 0);
           setCategory(productData ? productData.category : "");
+          setImage(productData ? productData.image : null);
         } else {
           // if not available, set error message
           setError("Product not found");
@@ -57,7 +74,7 @@ const ProductEdit = () => {
     }
 
     try {
-      await updateProduct(id, name, description, price, category);
+      await updateProduct(id, name, description, price, category, image);
 
       await Swal.fire({
         title: "Success!",
@@ -164,6 +181,42 @@ const ProductEdit = () => {
           >
             Back
           </Button>
+        </Box>
+        <Box mb={2} sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
+          {image ? (
+            <>
+              <img src={API_URL + image} style={{ maxHeight: 80 }} />
+              <Typography>Image uploaded</Typography>
+              <Button
+                color="info"
+                variant="contained"
+                size="small"
+                onClick={() => setImage("")}
+              >
+                Remove
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="contained" component="label">
+                Upload image
+                <VisuallyHiddenInput
+                  type="file"
+                  onChange={async (event) => {
+                    if (event.target.files.length > 0) {
+                      try {
+                        const data = await uploadImage(event.target.files[0]);
+                        setImage(data.image_url);
+                      } catch (err) {
+                        toast.error("Image upload failed");
+                      }
+                    }
+                  }}
+                  accept="image/*"
+                />
+              </Button>
+            </>
+          )}
         </Box>
       </Container>
     </>

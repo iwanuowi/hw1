@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { getCart, deleteItemFromCart } from "../utils/cart";
 import { Link } from "react-router";
+import { API_URL } from "../utils/constants";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -75,9 +76,28 @@ const CartPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {cartItems.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.name}</TableCell>
+              {cartItems.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    <Box display="flex" alignItems="center" gap={2}>
+                      {/* Product image */}
+                      <img
+                        src={
+                          item.image
+                            ? API_URL + item.image
+                            : API_URL + "uploads/default_image.png"
+                        }
+                        alt={item.name}
+                        style={{
+                          objectFit: "cover",
+                          borderRadius: 8,
+                        }}
+                      />
+
+                      {/* Product name */}
+                      <Typography>{item.name}</Typography>
+                    </Box>
+                  </TableCell>
                   <TableCell>${item.price.toFixed(2)}</TableCell>
                   <TableCell>{item.quantity}</TableCell>
                   <TableCell>

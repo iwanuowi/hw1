@@ -112,8 +112,8 @@ const OrdersPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.map((item) => (
-                <TableRow key={item.id}>
+              {orders.map((item, index) => (
+                <TableRow key={index}>
                   <TableCell>
                     <Box display="flex" flexDirection="column">
                       <Typography variant="body1" fontWeight="bold">
