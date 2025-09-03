@@ -10,11 +10,11 @@ import {
   TableHead,
   TableRow,
   Box,
-  Divider,
 } from "@mui/material";
 import { getCart, deleteItemFromCart } from "../utils/cart";
 import { Link } from "react-router";
 import { API_URL } from "../utils/constants";
+import Header from "../components/Header";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -38,34 +38,9 @@ const CartPage = () => {
   return (
     <>
       {/* Header */}
-      <div>
-        <Typography
-          variant="h3"
-          align="center"
-          fontWeight="bold"
-          sx={{ marginBottom: 2, marginTop: 2 }}
-        >
-          Cart
-        </Typography>
-
-        <Box display="flex" justifyContent="center" gap={2}>
-          <Button component={Link} to="/" variant="outlined">
-            Home
-          </Button>
-          <Button component={Link} to="/cart" variant="outlined">
-            Cart
-          </Button>
-          <Button component={Link} to="/orders" variant="outlined">
-            Orders
-          </Button>
-          <Button component={Link} to="/orders" variant="outlined">
-            Categories
-          </Button>
-        </Box>
-      </div>
+      <Header title="Cart" />
 
       {/* The Cart */}
-      <Divider sx={{ mt: 3 }} />
       <Container maxWidth="lg" sx={{ textAlign: "center", mt: 4 }}>
         <TableContainer>
           <Table>
@@ -94,6 +69,8 @@ const CartPage = () => {
                         style={{
                           objectFit: "cover",
                           borderRadius: 8,
+                          height: "80px",
+                          width: "80px",
                         }}
                       />
 

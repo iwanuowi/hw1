@@ -3,20 +3,18 @@ import {
   Box,
   Typography,
   Button,
-  Divider,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Select,
   MenuItem,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getOrders, updateOrder, deleteOrder } from "../utils/api_orders";
+import Header from "../components/Header";
 import Swal from "sweetalert2";
 
 const OrdersPage = () => {
@@ -73,32 +71,7 @@ const OrdersPage = () => {
   return (
     <>
       {/* Header */}
-      <div>
-        <Typography
-          variant="h3"
-          align="center"
-          fontWeight="bold"
-          sx={{ marginBottom: 2, marginTop: 2 }}
-        >
-          My Orders
-        </Typography>
-
-        <Box display="flex" justifyContent="center" gap={2}>
-          <Button component={Link} to="/" variant="outlined">
-            Home
-          </Button>
-          <Button component={Link} to="/cart" variant="outlined">
-            Cart
-          </Button>
-          <Button component={Link} to="/orders" variant="outlined">
-            Orders
-          </Button>
-          <Button component={Link} to="/categories" variant="outlined">
-            Categories
-          </Button>
-        </Box>
-      </div>
-      <Divider sx={{ mt: 3, mb: 3 }} />
+      <Header title="Orders" />
 
       {/* Orders Table */}
       <Container maxWidth="lg">

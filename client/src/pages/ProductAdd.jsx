@@ -10,7 +10,7 @@ import {
   Box,
   Container,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { addProduct } from "../utils/api";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 import { styled } from "@mui/material/styles";
 import { uploadImage } from "../utils/api_image";
 import { API_URL } from "../utils/constants";
+import { getCategories } from "../utils/api_category";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -38,6 +39,7 @@ const ProductAdd = () => {
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
   const [image, setImage] = useState("");
+  const [categories, setCategories] = useState([]);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -57,6 +59,12 @@ const ProductAdd = () => {
       navigate("/");
     });
   };
+
+  useEffect(() => {
+    getCategories().then((data) => {
+      setCategories(data);
+    });
+  }, []);
 
   return (
     <>
@@ -104,14 +112,14 @@ const ProductAdd = () => {
               Category
             </InputLabel>
             <Select
-              labelId="category-label"
               value={category}
               onChange={(event) => setCategory(event.target.value)}
             >
-              <MenuItem value={"Consoles"}>Consoles</MenuItem>
-              <MenuItem value={"Games"}>Games</MenuItem>
-              <MenuItem value={"Accessories"}>Accessories</MenuItem>
-              <MenuItem value={"Subscriptions"}>Subscriptions</MenuItem>
+              {categories.map((cat) => (
+                <MenuItem key={cat._id} value={cat.label}>
+                  {cat.label}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Box>

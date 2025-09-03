@@ -12,15 +12,14 @@ import {
   Button,
   Typography,
   Paper,
-  Divider,
   Backdrop,
   CircularProgress,
 } from "@mui/material";
 import { useState } from "react";
 import { getCart } from "../utils/cart";
-import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import validator from "email-validator";
+import Header from "../components/Header";
 import { createOrder } from "../utils/api_orders";
 
 const CheckoutPage = () => {
@@ -66,27 +65,7 @@ const CheckoutPage = () => {
   return (
     <>
       {/* Header */}
-      <div>
-        <Typography
-          variant="h3"
-          align="center"
-          fontWeight="bold"
-          sx={{ marginBottom: 2, marginTop: 2 }}
-        >
-          Checkout
-        </Typography>
-
-        <Box display="flex" justifyContent="center" gap={2}>
-          <Button component={Link} to="/" variant="outlined">
-            Home
-          </Button>
-          <Button component={Link} to="/cart" variant="outlined">
-            Cart
-          </Button>
-        </Box>
-      </div>
-
-      <Divider sx={{ mt: 3 }} />
+      <Header title="Check Out" />
       <Container maxWidth="lg" sx={{ textAlign: "center", mt: 4 }}>
         <Grid container spacing={2} justifyContent="center">
           <Grid item size={{ xs: 12, md: 6, lg: 6 }}>

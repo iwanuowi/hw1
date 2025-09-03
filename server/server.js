@@ -23,7 +23,7 @@ app.use("/orders", require("./routes/order"));
 app.use("/payment", require("./routes/payment"));
 app.use("/image", require("./routes/image"));
 app.use("/categories", require("./routes/category"));
-
+app.use("/users", require("./routes/user"));
 // set a folder as static path
 app.use("/uploads", express.static("uploads"));
 

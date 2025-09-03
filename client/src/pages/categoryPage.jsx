@@ -22,6 +22,7 @@ import {
   updateCategory,
 } from "../utils/api_category";
 import Swal from "sweetalert2";
+import Header from "../components/Header";
 
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
@@ -92,32 +93,7 @@ const CategoriesPage = () => {
   return (
     <>
       {/* Header */}
-      <div>
-        <Typography
-          variant="h3"
-          align="center"
-          fontWeight="bold"
-          sx={{ marginBottom: 2, marginTop: 2 }}
-        >
-          Categories
-        </Typography>
-
-        <Box display="flex" justifyContent="center" gap={2}>
-          <Button component={Link} to="/" variant="outlined">
-            Home
-          </Button>
-          <Button component={Link} to="/cart" variant="outlined">
-            Cart
-          </Button>
-          <Button component={Link} to="/orders" variant="outlined">
-            Orders
-          </Button>
-          <Button component={Link} to="/categories" variant="outlined">
-            Categories
-          </Button>
-        </Box>
-      </div>
-      <Divider sx={{ mt: 3, mb: 3 }} />
+      <Header title="Category" />
       <Container>
         <Typography variant="h4" sx={{ mb: 3 }}>
           Categories

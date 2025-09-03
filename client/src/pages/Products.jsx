@@ -129,7 +129,7 @@ function Products() {
           alignContent="center"
         >
           {filteredProducts.map((product, i) => (
-            <Grid item xs={12} sm={6} md={4} key={i}>
+            <Grid item xs={4} key={i}>
               <Card
                 sx={{
                   height: "500px",
